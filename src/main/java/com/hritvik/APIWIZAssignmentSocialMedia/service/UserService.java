@@ -28,14 +28,16 @@ public class UserService {
 
 
     public ResponseEntity<String> createUser(UserInput userInput) {
+        // checking username exist or not
 
         if(userRepository.findByUserName(userInput.getUserName()).isPresent()){
             return new ResponseEntity<>("UserName  Already exist please try with different details",HttpStatus.BAD_REQUEST);
         }
+        // checking email exist or not
         if(userRepository.findByEmail(userInput.getEmail()).isPresent()){
             return new ResponseEntity<>("Email Already exist please try with different details",HttpStatus.BAD_REQUEST);
         }
-
+        //Building user
 
         User user = User.builder()
                 .name(userInput.getName())
@@ -47,8 +49,9 @@ public class UserService {
                 .profileImage(userInput.getProfileImage())
                 .role(userInput.getRole())
                 .build();
-
+   // saving user details in db
         User savedUser = userRepository.save(user);
+        // building email details
         EmailDetails emailDetails = EmailDetails.builder()
                 .recipient(savedUser.getEmail())
                 .subject("ACCOUNT CREATION")
@@ -59,7 +62,9 @@ public class UserService {
                         +"Cick on this link to Activate account \n"
                         +"http://localhost:8080/api/user/activate/"+ savedUser.getId() ) // activation link
                       .build();
+        // sending mail
         emailService.sendEmailAlert(emailDetails);
+        //returning result
         return new ResponseEntity<>("User Created Successfully and Activation link sent on mail" , HttpStatus.OK);
     }
 
@@ -76,21 +81,26 @@ public class UserService {
 
 
     public ResponseEntity<String> deleteUser(Long userId, String username) {
-
+     // checking if account is Active or not
         if (isAccountEnable(username)) {
-
+          // check if user ia admin
             if (userRepository.findByUserName(username).get().getRole().equals("ROLE_ADMIN")) {
+                //deleting user
                 userRepository.deleteById(userId);
                 return new ResponseEntity<>("user removed successfully", HttpStatus.OK);
-            } else if (userRepository.findByUserName(username).get().getId().equals(userId)) {
+            }
+            // check if login user and user id matches
+            else if (userRepository.findByUserName(username).get().getId().equals(userId)) {
+                //deleting user
                 userRepository.deleteById(userId);
                 return new ResponseEntity<>("user removed successfully", HttpStatus.OK);
 
             }
-
+           // returning failure message
             return new ResponseEntity<>("Only Self-User or admin can remove user", HttpStatus.BAD_REQUEST);
 
         }
+        // returning failure message
         return new ResponseEntity<>("Account is Disabled ",HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
@@ -106,11 +116,11 @@ public class UserService {
 
 
     public ResponseEntity<String> updateUser( String username, UserUpdateInput updateInput) {
-
+       // check for account active
         if(isAccountEnable(username)) {
-
+            // searching for user
             Optional<User> user = userRepository.findByUserName(username);
-
+             // updating details
             if (user.isPresent()) {
                 if (updateInput.getBio() != null) {
                     user.get().setBio(updateInput.getBio());
@@ -118,27 +128,35 @@ public class UserService {
                 if (updateInput.getProfileImage() != null) {
                     user.get().setProfileImage(updateInput.getProfileImage());
                 }
+                // saving user details
                 userRepository.save(user.get());
-
+               // return success
                 return new ResponseEntity<>("User Details Updated Successfully", HttpStatus.OK);
             }
+            // return failure
             return new ResponseEntity<>("Error occurred try again", HttpStatus.BAD_REQUEST);
         }
+        //  // return failure
         return new ResponseEntity<>("Account is Disabled ",HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
     public boolean isAccountEnable (String username){
+        // checking account active or not
         return userRepository.findByUserName(username).get().isAccountActivate();
     }
 
     public ResponseEntity<String> disableAccount(String username, Long userId) {
-
+         // checking for user
         Optional<User> user = userRepository.findById(userId);
         if(user.isEmpty()){
+            // return failure
             return  new ResponseEntity<>("No user available wih user id "+ userId,HttpStatus.BAD_REQUEST);
         }
+        // disabling account
         user.get().setAccountActivate(false);
+        // saving user;
         userRepository.save(user.get());
+        // return success
         return  new ResponseEntity<>("Account Disable successfully By Admin "+ username,HttpStatus.OK);
 
     }

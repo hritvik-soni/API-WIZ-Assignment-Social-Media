@@ -20,6 +20,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    /**
+     * Creating new post for the user
+     * @param authentication using for extracting long info(username)
+     * @param file taking file as input(contains - text,image,video)
+     * @param privacy taking privacy as input for post privacy
+     * @return returning success or failure message
+     * @throws IOException throwing input error
+     */
     @PostMapping("/new")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<String> createPost(Authentication authentication,
@@ -30,6 +38,12 @@ public class PostController {
         return  postService.createPost( file,username,privacy);
     }
 
+    /**
+     * Searching for Posts by userId
+     * @param authentication using for extracting long info(username)
+     * @param userId taking usedId as input for searching
+     * @return returning success or failure message (List of Post, fail message)
+     */
     @GetMapping("/of/{userId}")
 //    @PreAuthorize("hasAuthority('ROLE_USER,ROLE_ADMIN')")
     public ResponseEntity<List<?>> getPostsByUserId(Authentication authentication, @PathVariable Long userId) {
@@ -39,12 +53,26 @@ public class PostController {
         return  postService.getPostsByUserId(userId,username);
     }
 
+    /**
+     * removing post
+     * @param authentication using for extracting long info(username)
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
+
     @DeleteMapping("/{postId}")
 //    @PreAuthorize("hasAuthority('ROLE_USER,ROLE_ADMIN')")
     public ResponseEntity<String> deletePost(Authentication authentication,@PathVariable Long postId) {
         String username = authentication.getName();
         return  postService.deletePost(postId,username);
     }
+
+    /**
+     * creating post reshare
+     * @param authentication using for extracting long info(username)
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
 
     @PostMapping("/reShare/{postId}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -53,6 +81,11 @@ public class PostController {
         return postService.reSharePost(postId,username);
     }
 
+    /**
+     * searching / returning specific post
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
     @GetMapping("/by/{postId}")
     public ResponseEntity<byte[]> postById(@PathVariable Long postId) {
 

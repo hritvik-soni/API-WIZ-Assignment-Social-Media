@@ -21,11 +21,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Creating new user
+     * @param userInput taking input as response body
+     * @return returning success or failure message
+     */
     @PostMapping("/new")
     public ResponseEntity<String> createUser(@RequestBody UserInput userInput) {
         return userService.createUser(userInput);
     }
 
+    /**
+     * Searching for specific user
+     * @param userId taking postId as input
+     * @return returning success or failure message
+     */
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
@@ -33,6 +43,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Searching for all the users
+     * @return returning success or failure message
+     */
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -40,16 +54,27 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    /**
+     *  Updating user detail
+     * @param authentication * @param authentication using for extracting long info(username)
+     * @param updateInput taking input for user detail update(profile pic or bio)
+     * @return returning success or failure message
+     */
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_USER')")
 
     public ResponseEntity<String> updateUser(Authentication authentication, @RequestBody UserUpdateInput updateInput) {
-        // Assuming user IDs match between path variable and request body
           String username= authentication.getName();
 
         return userService.updateUser(username,updateInput);
     }
 
+    /**
+     * removing user
+     * @param authentication using for extracting long info(username)
+     * @param userId  taking userId as input
+     * @return returning success or failure message
+     */
     @DeleteMapping("/remove/{userId}")
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN,ROLE_USER')")
     public ResponseEntity<String> deleteUser(Authentication authentication,@PathVariable Long userId) {
@@ -58,12 +83,24 @@ public class UserController {
 
     }
 
+    /**
+     * activating user account
+     * @param userId  taking userId as input
+     * @return returning success or failure message
+     */
+
     @GetMapping("/activate/{userId}")
     public ResponseEntity<String> activate (@PathVariable Long userId) {
        return userService.Activate(userId);
 
     }
 
+    /**
+     * Disabling the user account
+     * @param authentication using for extracting long info(username)
+     * @param userId  taking userId as input
+     * @return returning success or failure message
+     */
     @PostMapping("/disable/{userId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> disable(Authentication authentication,@PathVariable Long userId) {

@@ -20,7 +20,10 @@ public class EmailService {
     private String senderEmail;
 
 
+
+
     public void sendEmailAlert(EmailDetails emailDetails) {
+        // creating mail service
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(senderEmail);

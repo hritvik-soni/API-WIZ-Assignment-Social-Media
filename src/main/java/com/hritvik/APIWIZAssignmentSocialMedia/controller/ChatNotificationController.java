@@ -20,6 +20,14 @@ public class ChatNotificationController {
     private EmailService emailService;
     @Autowired
     private UserRepository userRepository;
+
+    /**
+     * create group chat endpoint
+     * @param authentication taking username from login info
+     * @param input taking list of usernames
+     * @return sending mails for group chat
+     */
+
     @GetMapping("/group")
     public ResponseEntity<String> groupChat(Authentication authentication, @RequestBody GroupChatInput input) {
         String authUser = authentication.getName();
@@ -43,6 +51,12 @@ public class ChatNotificationController {
                 "http://localhost:8080/"+"\n"+"(please enter username and password)", HttpStatus.OK);
     }
 
+    /**
+     * create 1v1 chat for users
+     * @param authentication  taking username from login info
+     * @param username taking  username
+     * @return sending mail
+     */
     @GetMapping("/1v1")
     public ResponseEntity<String> onev1Chat(Authentication authentication, @RequestParam("username") String username) {
         String authUser = authentication.getName();

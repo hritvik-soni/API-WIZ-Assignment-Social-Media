@@ -2,7 +2,7 @@
 
 ## Description
 
-The Social Media Platform project aims to create a robust and user-friendly social networking application, providing individuals with a versatile and engaging platform for connecting, sharing, and communicating.
+TThe Social Media Platform API is a robust and versatile solution designed to power a modern social networking application. This project is crafted to provide users with an engaging platform for connecting, sharing, and communicating in a dynamic and interactive environment. Leveraging the power of Java (Spring Boot) for the backend and offering support for both MongoDB and Postgres databases (I have used postgres), this API aims to deliver a comprehensive and secure foundation for creating a feature-rich social media experience.
 
 ## User
 

@@ -22,17 +22,37 @@ public class UserAnalyticsController {
     @Autowired
     private PostService postService;
 
+    /**
+     * Searching for like counts on the post
+     * @param authentication using for extracting long info(username)
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
+
     @GetMapping("/likeCount/{postId}")
     public ResponseEntity<String> countLike (Authentication authentication, @PathVariable Long postId){
         String username = authentication.getName();
         return likeService.countLike(username,postId);
     }
+    /**
+     * Searching for reShare counts on the post
+     * @param authentication using for extracting long info(username)
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
+
 
     @GetMapping("/reShareCount/{postId}")
     public ResponseEntity<String> reShareCount(Authentication authentication, @PathVariable Long postId) {
         String username = authentication.getName();
         return postService.reShareCount(postId,username);
     }
+    /**
+     * Searching for comments counts on the post
+     * @param authentication using for extracting long info(username)
+     * @param postId taking postId as input
+     * @return returning success or failure message
+     */
 
     @GetMapping("/commentCount/{postId}")
     public ResponseEntity<String> countComment (Authentication authentication, @PathVariable Long postId){

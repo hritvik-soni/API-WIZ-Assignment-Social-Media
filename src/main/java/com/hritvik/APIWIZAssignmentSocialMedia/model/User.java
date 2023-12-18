@@ -1,6 +1,5 @@
 package com.hritvik.APIWIZAssignmentSocialMedia.model;
 
-;
 import com.hritvik.APIWIZAssignmentSocialMedia.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
