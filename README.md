@@ -10,8 +10,8 @@ The Social Media Platform project aims to create a robust and user-friendly soci
 
 - **API Endpoint:** `POST /api/user/new`
 - **_Roles:_**
-  - Regular User
-  - Admin
+  - Regular User (ROLE_USER)
+  - Admin (USER_ADMIN)
   - Create accounts with unique usernames and email addresses and roles.
 - **API Endpoint:** `PUT /api/user/update`
 
@@ -102,7 +102,7 @@ The Social Media Platform project aims to create a robust and user-friendly soci
 
 ### Database
 
-- Use MongoDB or Postgres
+- Use MongoDB or Postgres ( I have used postgres )
 
 ## Getting Started
 
@@ -111,6 +111,6 @@ To get started with the Social Media Platform API, follow these steps:
 1. Clone the repository.
 2. Set up Database.
 3. Run the project.
-4. User Postman for testing.
+4. Use Postman for testing.
 
 Happy coding!
