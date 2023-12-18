@@ -21,10 +21,14 @@ The Social Media Platform project aims to create a robust and user-friendly soci
 
   - Log in using a username and password.
 
+- **API Endpoint:**
+
 - **Admin Operations:**
   - **API Endpoint:** `Delete /api/user/remove/{userId}`delete user accounts.
   - **API Endpoint:** `GET /api/users/all`: View all user accounts.
   - **API Endpoint:** `Post/api/user/disable/{userId}`: Disable account
+- **Authorization and Authentication:**
+  - Use Basic Auth in postman (Use Username and Password for login) (you have to use login for every Endpoints except Register user)
 
 ## Content Management
 
