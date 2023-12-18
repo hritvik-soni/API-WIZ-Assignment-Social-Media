@@ -22,9 +22,9 @@ The Social Media Platform project aims to create a robust and user-friendly soci
   - Log in using a username and password.
 
 - **Admin Operations:**
-  - `Delete /api/user/remove/{userId}`delete user accounts.
-  - `GET /api/users/all`: View all user accounts.
-  - `Post/api/user/disable/{userId}`: Disable account
+  - **API Endpoint:** `Delete /api/user/remove/{userId}`delete user accounts.
+  - **API Endpoint:** `GET /api/users/all`: View all user accounts.
+  - **API Endpoint:** `Post/api/user/disable/{userId}`: Disable account
 
 ## Content Management
 
