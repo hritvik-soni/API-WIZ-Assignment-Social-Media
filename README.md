@@ -11,7 +11,7 @@ The Social Media Platform project aims to create a robust and user-friendly soci
 - **API Endpoint:** `POST /api/user/new`
 - **_Roles:_**
   - Regular User (ROLE_USER)
-  - Admin (USER_ADMIN)
+  - Admin (ROLE_ADMIN)
   - Create accounts with unique usernames and email addresses and roles.
 - **API Endpoint:** `PUT /api/user/update`
 
